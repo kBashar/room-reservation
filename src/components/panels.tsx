@@ -13,7 +13,7 @@ export const NavPanel = ({floors, onSelectionChange}: NavigationProps) => {
         <ul style={{ listStyleType: "none", padding: 0 }}>
         {
             floors.map((floor) => {
-            return <li><FloorTreeNode floorData={floor} onRoomSelection={onSelectionChange}></FloorTreeNode></li>
+            return <li key={floor.name}><FloorTreeNode floorData={floor} onRoomSelection={onSelectionChange}></FloorTreeNode></li>
         })}
         </ul>
         </div>

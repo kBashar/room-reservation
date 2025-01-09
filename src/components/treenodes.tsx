@@ -20,7 +20,7 @@ export const FloorTreeNode = ({floorData, onRoomSelection}: FloorProps): JSX.Ele
             <h2 onClick={handleClick} className="hover:bg-sky-700" style={{textAlign: "left"}}>{floorData.name}</h2>
             {
                 isActive && floorData.rooms.map((room) => (
-                    <RoomTreeNode roomData={room} onRoomSelection={onRoomSelection}></RoomTreeNode>
+                    <RoomTreeNode roomData={room} onRoomSelection={onRoomSelection} key={room.name}></RoomTreeNode>
                 ))
             }
         </>
