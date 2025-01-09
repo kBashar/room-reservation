@@ -19,7 +19,7 @@ interface FloorDetailProps {
 export const FloorDetail = ({floor}: FloorDetailProps) => {
     return (
         <div>
-            <h2>There are {floor?.rooms.length} meeting rooms in {floor.name} floor</h2>
+            <h2>There are {floor.rooms.length} meeting rooms in {floor.name} floor</h2>
         </div>
     )
 }
@@ -31,7 +31,7 @@ interface RoomDetailProps {
 export const RoomDetail = ({room}: RoomDetailProps) => {
     return (
         <div>
-            <h2>{room?.name}</h2>
+            <h2>{room.name}</h2>
             <h3>Capacity: {room.capacity}</h3>
         </div>
     )

@@ -26,8 +26,8 @@ interface DetailProps {
 
 export const DetailPanel = ({children}: DetailProps) => {
     return (
-        <div style={{ flex: 2, padding: "1rem" }}>
-            <h3>Details</h3>
+        <div style={{ flex: 8, padding: "1rem" }}>
+            <h1>Details</h1>
             <div>
                 {children}
             </div>

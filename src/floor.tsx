@@ -13,6 +13,7 @@ export const FloorTreeNode = ({floorData, onRoomSelection}: FloorProps): JSX.Ele
     const [isActive, setIsActive] = useState(false)
     const handleClick = () => {
         setIsActive(!isActive)
+        onRoomSelection(floorData)
     }
 
     return (
