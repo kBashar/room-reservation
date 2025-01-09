@@ -1,6 +1,5 @@
 import { useState } from "react";
-import { RoomTreeNode } from "./room";
-import { IFloor, Node } from "./node";
+import { IFloor, Node } from "./types";
 
 
 interface FloorProps {
@@ -18,12 +17,26 @@ export const FloorTreeNode = ({floorData, onRoomSelection}: FloorProps): JSX.Ele
 
     return (
         <>
-            <h2 onClick={handleClick}>{floorData.name}</h2>
+            <h2 onClick={handleClick} className="hover:bg-sky-700" style={{textAlign: "left"}}>{floorData.name}</h2>
             {
                 isActive && floorData.rooms.map((room) => (
                     <RoomTreeNode roomData={room} onRoomSelection={onRoomSelection}></RoomTreeNode>
                 ))
             }
         </>
+    )
+}
+
+
+interface RoomProps {
+    roomData: Node;
+    onRoomSelection: (node: Node) => void;
+}
+
+export const RoomTreeNode = ({roomData, onRoomSelection}: RoomProps): JSX.Element => {
+    return (
+        <div onClick={() => onRoomSelection(roomData)}>
+            <h4 style={{textAlign: "left"}} className="hover:bg-violet-700">{"|\n----" + roomData.name}</h4>
+        </div>
     )
 }

@@ -1,4 +1,4 @@
-import { NodeType, IFloor } from './node'
+import { NodeType, IFloor } from '../components/types'
 
 export const floors: IFloor[] = [
     {

@@ -1,8 +1,8 @@
 import { useState } from 'react'
-import {floors} from './data'
+import {floors} from '../data/data'
 import { NavPanel, DetailPanel } from './panels'
 import { GlobalDetail, FloorDetail, RoomDetail } from './details'
-import { Node, NodeType, IRoom, IFloor } from './node'
+import { Node, NodeType, IRoom, IFloor } from './types'
 
 import './App.css'
 

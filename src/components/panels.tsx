@@ -1,5 +1,5 @@
-import { FloorTreeNode} from "./floor"
-import { IFloor, Node } from "./node"
+import { FloorTreeNode} from "./treenodes"
+import { IFloor, Node } from "./types"
 
 export interface NavigationProps {
     floors: IFloor[]

@@ -1,4 +1,4 @@
-import { IRoom, IFloor } from './node'
+import { IRoom, IFloor } from './types'
 
 interface GlobalDetailProps {
     floors: IFloor[]
