@@ -6,24 +6,28 @@ export const floors: IFloor[] = [
       "type": NodeType.Floor,
       "rooms": [
         {
-          "name": "Stream",
+          "name": "Turing Stream",
           "type": NodeType.Room,
-          "capacity": 12
+          "capacity": 12,
+          "isAvailable": true
         },
         {
-          "name": "Block",
+          "name": "Turing Block",
           "type": NodeType.Room,
-          "capacity": 8
+          "capacity": 8,
+          "isAvailable": true
         },
         {
           "name": "Turing Byte 01",
           "capacity": 6,
           "type": NodeType.Room,
+          "isAvailable": false
         },
         {
           "name": "Turing Bit 01",
           "type": NodeType.Room,
-          "capacity": 1
+          "capacity": 1,
+          "isAvailable": false
         }
       ]
     },
@@ -32,24 +36,28 @@ export const floors: IFloor[] = [
       "type": NodeType.Floor,
       "rooms": [
             {
-                "name": "Stream",
+                "name": "Ada Stream",
                 "type": NodeType.Room,
-                "capacity": 12
+                "capacity": 12,
+                "isAvailable": true
             },
             {
-                "name": "Block",
+                "name": "Ada Block",
                 "type": NodeType.Room,
-                "capacity": 8
+                "capacity": 8,
+                "isAvailable": false
             },
             {
                 "name": "Ada Byte 01",
                 "type": NodeType.Room,
-                "capacity": 6
+                "capacity": 6,
+                "isAvailable": true
             },
             {
                 "name": "Ada Bit 01",
                 "type": NodeType.Room,
-                "capacity": 1
+                "capacity": 1,
+                "isAvailable": true
             }
         ]
     },
@@ -58,24 +66,28 @@ export const floors: IFloor[] = [
       "type": NodeType.Floor,
       "rooms": [
             {
-                "name": "Stream",
+                "name": "Hopper Stream",
                 "type": NodeType.Room,
-                "capacity": 12
+                "capacity": 12,
+                "isAvailable": true
             },
             {
-                "name": "Block",
+                "name": "Hopper Block",
                 "type": NodeType.Room,
-                "capacity": 8
+                "capacity": 8,
+                "isAvailable": false
             },
             {
                 "name": "Hopper Byte 01",
                 "type": NodeType.Room,
-                "capacity": 6
+                "capacity": 6,
+                "isAvailable": false
             },
             {
                 "name": "Hopper Bit 01",
                 "type": NodeType.Room,
-                "capacity": 1
+                "capacity": 1,
+                "isAvailable": true
             }
         ]
     }

@@ -33,7 +33,7 @@ interface RoomProps {
     onRoomSelection: (node: Node) => void;
 }
 
-export const RoomTreeNode = ({roomData, onRoomSelection}: RoomProps): JSX.Element => {
+export const RoomTreeNode = ({ roomData, onRoomSelection}: RoomProps): JSX.Element => {
     return (
         <div onClick={() => onRoomSelection(roomData)}>
             <h4 style={{textAlign: "left"}} className="hover:bg-violet-700">{"|\n----" + roomData.name}</h4>

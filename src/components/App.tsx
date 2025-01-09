@@ -4,7 +4,7 @@ import { NavPanel, DetailPanel } from './panels'
 import { GlobalDetail, FloorDetail, RoomDetail } from './details'
 import { Node, NodeType, IRoom, IFloor } from './types'
 
-import './App.css'
+import '../App.css'
 
 
 function App() {
