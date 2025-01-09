@@ -1,5 +1,4 @@
-import { Floor, FloorModel } from "./floor"
-import { RoomModel } from "./room"
+import { FloorTreeNode} from "./floor"
 import { IFloor, Node } from "./node"
 
 export interface NavigationProps {
@@ -14,7 +13,7 @@ export const NavPanel = ({floors, onSelectionChange}: NavigationProps) => {
         <ul style={{ listStyleType: "none", padding: 0 }}>
         {
             floors.map((floor) => {
-            return <li><Floor floorData={floor} onRoomSelection={onSelectionChange}></Floor></li>
+            return <li><FloorTreeNode floorData={floor} onRoomSelection={onSelectionChange}></FloorTreeNode></li>
         })}
         </ul>
         </div>

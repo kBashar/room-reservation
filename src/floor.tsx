@@ -1,19 +1,14 @@
-import React from "react";
 import { useState } from "react";
-import { RoomModel, Room } from "./room";
-import { NodeData  } from "./node";
+import { RoomTreeNode } from "./room";
+import { IFloor, Node } from "./node";
 
-export interface FloorModel {
-    name: string
-    rooms: RoomModel[]
-}
 
 interface FloorProps {
-    floorData: NodeData;
-    onRoomSelection: (node: NodeData) => void;
+    floorData: IFloor;
+    onRoomSelection: (node: Node) => void;
 }
 
-export const Floor = ({floorData, onRoomSelection}: FloorProps): JSX.Element => {
+export const FloorTreeNode = ({floorData, onRoomSelection}: FloorProps): JSX.Element => {
     
     const [isActive, setIsActive] = useState(false)
     const handleClick = () => {
@@ -22,10 +17,10 @@ export const Floor = ({floorData, onRoomSelection}: FloorProps): JSX.Element => 
 
     return (
         <>
-            <h4 onClick={handleClick}>{floorData.name}</h4>
+            <h2 onClick={handleClick}>{floorData.name}</h2>
             {
-                isActive && floorData.rooms?.map((room) => (
-                    <Room roomData={room} onRoomSelection={onRoomSelection}></Room>
+                isActive && floorData.rooms.map((room) => (
+                    <RoomTreeNode roomData={room} onRoomSelection={onRoomSelection}></RoomTreeNode>
                 ))
             }
         </>
