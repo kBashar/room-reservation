@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react'
-import {floors} from '../data/data'
 import { NavPanel, DetailPanel } from './panels'
 import { GlobalDetail, FloorDetail, RoomDetail } from './details'
 import { Node, NodeType, IRoom, IFloor } from './types'
@@ -32,8 +31,20 @@ function App() {
       const floorDataFetch = async () => {
         console.log("at floor data fetch")
         try {
-            const floors = await fetcher()
+            let floors: IFloor[] = await fetcher()
             setError(null)
+            floors = floors.map(floor => {
+              const rooms = floor.rooms.map(room => {
+                return {
+                  ...room,
+                  floor: floor.name
+                }
+              })
+              return {
+                ...floor,
+                rooms: rooms
+              }
+            })
             setFloors(floors)
           }
         catch(err: unknown) {

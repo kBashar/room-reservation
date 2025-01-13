@@ -5,9 +5,11 @@ interface GlobalDetailProps {
 }
 
 export const GlobalDetail = ({floors}: GlobalDetailProps) => {
-    return (
+  let all_rooms = floors.flatMap(floor => floor.rooms)
+
+  return (
         <div>
-            <h2>There are {floors?.length} floors</h2>
+          <RoomList rooms={all_rooms}></RoomList>
         </div>
     )
 }
@@ -52,3 +54,18 @@ export const FloorDetail = ({floor}: FloorDetailProps) => {
       </div>
     );
   };
+
+
+  interface RoomListProps {
+    rooms: IRoom[]
+  }
+  
+  export const RoomList = ({rooms}: RoomListProps) => {
+    return (
+      <div>
+        <ul>
+          {rooms.map(room => <li><RoomDetail room={room}></RoomDetail></li>)}
+        </ul>
+      </div>
+  )
+  }

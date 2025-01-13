@@ -12,6 +12,7 @@ export interface Node {
 export interface IRoom extends Node {
     capacity: number
     isAvailable: boolean
+    floor?: string
 }
 
 export interface IFloor extends Node {
