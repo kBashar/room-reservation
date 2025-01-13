@@ -21,7 +21,7 @@ interface FloorDetailProps {
 export const FloorDetail = ({floor}: FloorDetailProps) => {
     return (
         <div>
-            <h2>There are {floor.rooms.length} meeting rooms in {floor.name} floor</h2>
+            <RoomList rooms={floor.rooms}></RoomList>
         </div>
     )
 }
@@ -63,8 +63,8 @@ export const FloorDetail = ({floor}: FloorDetailProps) => {
   export const RoomList = ({rooms}: RoomListProps) => {
     return (
       <div>
-        <ul>
-          {rooms.map(room => <li><RoomDetail room={room}></RoomDetail></li>)}
+        <ul className='grid grid-cols-3 gap-4'>
+          {rooms.map(room => <li className='bg-gray-200 p-4'><RoomDetail room={room}></RoomDetail></li>)}
         </ul>
       </div>
   )
