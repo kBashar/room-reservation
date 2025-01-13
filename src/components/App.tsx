@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { NavPanel, DetailPanel } from './panels'
-import { GlobalDetail, FloorDetail, RoomDetail } from './details'
+import { GlobalDetail, FloorDetail, SingleRoomDetail } from './details'
 import { Node, NodeType, IRoom, IFloor } from './types'
 
 import '../App.css'
@@ -72,7 +72,7 @@ function App() {
       case NodeType.Floor:
         return <FloorDetail floor={selectedNode as IFloor}></FloorDetail>
       case NodeType.Room:
-        return <RoomDetail room={selectedNode as IRoom}></RoomDetail>
+        return <SingleRoomDetail room={selectedNode as IRoom}></SingleRoomDetail>
       default:
         return <GlobalDetail floors={floors} ></GlobalDetail>
     }
