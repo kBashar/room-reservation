@@ -64,7 +64,11 @@ export const FloorDetail = ({floor}: FloorDetailProps) => {
     return (
       <div>
         <ul className='grid grid-cols-3 gap-4'>
-          {rooms.map(room => <li className='bg-gray-200 p-4'><RoomDetail room={room}></RoomDetail></li>)}
+          {rooms.map(room => (
+            <li className='bg-gray-200 p-4'>
+              <RoomDetail room={room}></RoomDetail>
+              </li>
+            ))}
         </ul>
       </div>
   )
