@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react'
-import { NavPanel, DetailPanel } from './panels'
+import { NavPanel, DetailPanel, RightPanel } from './panels'
 import { GlobalDetail, FloorDetail, SingleRoomDetail } from './details'
 import { Node, NodeType, IRoom, IFloor } from './types'
+import { FloorContext } from '../data/contexts'
 
 import '../App.css'
 
@@ -88,12 +89,10 @@ function App() {
 
   return (
     <div style={{ display: "flex", height: "100vh"}}>
-      <NavPanel floors={floors} onSelectionChange={handleNodeClick} ></NavPanel> 
-      <DetailPanel>
-        {
-          getDetailView(selectedNode)
-        }
-      </DetailPanel>
+      <FloorContext.Provider value={floors}>
+      <NavPanel onSelectionChange={handleNodeClick} ></NavPanel>
+      <RightPanel detailPanel={getDetailView(selectedNode)}></RightPanel> 
+      </FloorContext.Provider>
     </div>
   );
 }
