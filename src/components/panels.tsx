@@ -1,8 +1,9 @@
 import { FloorTreeNode} from "./treenodes"
-import { IFloor, Node } from "./types"
-import { useContext } from "react"
+import { IFloor, Node, NodeType, IRoom, } from "./types"
+import { useContext, useState, useRef } from "react"
 import { FloorContext } from "../data/contexts"
 import { ComboBox } from "./utils"
+import { GlobalDetail, FloorDetail, SingleRoomDetail, RoomList } from './details'
 
 export interface NavigationProps {
     onSelectionChange: (node: Node) => void
@@ -23,11 +24,8 @@ export const NavPanel = ({onSelectionChange}: NavigationProps) => {
     )
 }
 
-interface DetailProps {
-    children: React.ReactNode
-}
 
-export const DetailPanel = ({children}: DetailProps) => {
+export const DetailPanel = ({children}) => {
     return (
             <div>
                 {children}
@@ -36,14 +34,43 @@ export const DetailPanel = ({children}: DetailProps) => {
 }
 
 interface RightPanelProps {
-    detailPanel: React.ReactNode
+    isAvailable?: boolean
+    minCapacity?: number
+    selectedFloor?: string
+    selectedRoom?: string
 }
 
-export const RightPanel = ({detailPanel}: RightPanelProps) => {
+export const RightPanel = (rooms: RightPanelProps) => {
+
+    const floors = useContext(FloorContext)
+    const [roomFilters, setRoomFilters] = useState(rooms)
+    const all_rooms = useRef<IRoom[]>(floors.flatMap(floor => floor.rooms))
+
+    let selectedRooms = all_rooms.current
+
+    console.log(roomFilters)
+    
+    if (roomFilters.selectedRoom !== undefined) {
+        selectedRooms = selectedRooms.filter(room => room.name === roomFilters.selectedRoom)
+    }
+    else {
+        if (roomFilters.selectedFloor !== undefined) {
+            selectedRooms = selectedRooms.filter(room => room.floor === roomFilters.selectedFloor)
+        }
+        if (roomFilters.minCapacity !== undefined) {
+            selectedRooms = selectedRooms.filter(room => room.capacity >= roomFilters.minCapacity)
+        }
+        if (roomFilters.isAvailable !== undefined) {
+            selectedRooms = selectedRooms.filter(room => room.isAvailable === roomFilters.isAvailable)
+        }
+    }
+
+    console.log(`Number of rooms ${selectedRooms.length}`)
+
     return (
         <div style={{ flex: 8, padding: "1rem" }} className="pt-6">
             <FilterPanle></FilterPanle>
-            <DetailPanel>{detailPanel}</DetailPanel> 
+            <RoomList rooms={selectedRooms}></RoomList>
         </div>
     )
 }

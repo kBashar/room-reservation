@@ -1,11 +1,14 @@
 import { IRoom, IFloor } from './types'
+import { FloorContext } from "../data/contexts"
+import { useContext } from 'react'
 
 interface GlobalDetailProps {
     floors: IFloor[]
 }
 
-export const GlobalDetail = ({floors}: GlobalDetailProps) => {
-  let all_rooms = floors.flatMap(floor => floor.rooms)
+export const GlobalDetail = () => {
+  const floors = useContext(FloorContext)
+  const all_rooms = floors.flatMap(floor => floor.rooms)
 
   return (
         <div>
@@ -65,7 +68,7 @@ export const RoomList = ({rooms}: RoomListProps) => {
     <div>
       <ul className='grid grid-cols-3 gap-4'>
         {rooms.map(room => (
-          <li className='bg-gray-200 p-4'>
+          <li className='bg-gray-200 p-4' key={room.name}>
             <RoomDetail room={room}></RoomDetail>
             </li>
           ))}

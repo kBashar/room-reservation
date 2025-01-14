@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react'
-import { NavPanel, DetailPanel, RightPanel } from './panels'
-import { GlobalDetail, FloorDetail, SingleRoomDetail } from './details'
+import { NavPanel, RightPanel } from './panels'
 import { Node, NodeType, IRoom, IFloor } from './types'
 import { FloorContext } from '../data/contexts'
 
@@ -66,18 +65,8 @@ function App() {
 
   const handleNodeClick = (node: Node) => {
     setSelectedNode(node);
+    console.log(` node type ${node.type} name: ${node.name}`)
   };
-
-  const getDetailView = (selectedNode: Node) => {
-    switch(selectedNode.type) {
-      case NodeType.Floor:
-        return <FloorDetail floor={selectedNode as IFloor}></FloorDetail>
-      case NodeType.Room:
-        return <SingleRoomDetail room={selectedNode as IRoom}></SingleRoomDetail>
-      default:
-        return <GlobalDetail floors={floors} ></GlobalDetail>
-    }
-  }
 
   if (error) {
     return <h1>There are are some errors, try reloading the page</h1>
@@ -91,7 +80,10 @@ function App() {
     <div style={{ display: "flex", height: "100vh"}}>
       <FloorContext.Provider value={floors}>
       <NavPanel onSelectionChange={handleNodeClick} ></NavPanel>
-      <RightPanel detailPanel={getDetailView(selectedNode)}></RightPanel> 
+      <RightPanel 
+        selectedRoom={selectedNode.type === NodeType.Room.toString() ? selectedNode.name : undefined}  
+        selectedFloor={selectedNode.type === NodeType.Floor.toString() ? selectedNode.name : undefined}>
+      </RightPanel> 
       </FloorContext.Provider>
     </div>
   );

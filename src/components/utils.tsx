@@ -3,7 +3,7 @@ interface ComboBoxProps {
     name: string
     label: string
     values: string[]
-    valueChangeListener: (e: Event)=>void
+    valueChangeListener: (e: ChangeEventHandler)=>void
 }
 
 export const ComboBox = ({name, label, values, valueChangeListener}: ComboBoxProps) => {
@@ -12,7 +12,7 @@ export const ComboBox = ({name, label, values, valueChangeListener}: ComboBoxPro
             <label htmlFor={name}>{label}</label>
             <select name={name} id={name} onChange={valueChangeListener}>
                 {
-                    values.map(value => <option value={value}>{value}</option>)
+                    values.map(value => <option value={value} key={value}>{value}</option>)
                 } 
             </select>
         </div>
