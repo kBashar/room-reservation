@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { NavPanel, RightPanel } from './panels'
 import { Node, NodeType, IRoom, IFloor } from './types'
 import { FloorContext } from '../data/contexts'
@@ -11,9 +11,11 @@ const globalNode = {
 }
 
 function App() {
-  const [selectedNode, setSelectedNode] = useState<Node | IFloor | IRoom>(globalNode);
   const [error, setError] = useState<string|null>(null)
   const [floors, setFloors] = useState<IFloor[]>([])
+  const [selectedRooms, setSelectedRooms] = useState<IRoom[]>([])
+  let all_rooms = useRef<IRoom[]>([])
+
 
   useEffect(()=> {
       const controller = new AbortController()
@@ -31,9 +33,9 @@ function App() {
       const floorDataFetch = async () => {
         console.log("at floor data fetch")
         try {
-            let floors: IFloor[] = await fetcher()
+            let _floors: IFloor[] = await fetcher()
             setError(null)
-            floors = floors.map(floor => {
+            _floors = _floors.map(floor => {
               const rooms = floor.rooms.map(room => {
                 return {
                   ...room,
@@ -45,7 +47,9 @@ function App() {
                 rooms: rooms
               }
             })
-            setFloors(floors)
+            setFloors(_floors)
+            all_rooms.current = _floors.flatMap(floor => floor.rooms)
+            setSelectedRooms(all_rooms.current)
           }
         catch(err: unknown) {
           if ((err as DOMException).name !== "AbortError") {
@@ -64,9 +68,18 @@ function App() {
   }, [error])
 
   const handleNodeClick = (node: Node) => {
-    setSelectedNode(node);
     console.log(` node type ${node.type} name: ${node.name}`)
+    if (node.type === NodeType.Room) {
+      setSelectedRooms(all_rooms.current.filter(room => room.name === node.name))
+    }
+    if (node.type === NodeType.Floor) {
+      setSelectedRooms(all_rooms.current.filter(room => room.floor === node.name))
+    }
   };
+
+  const floorChangeHandle = (floorName: string) => {
+    setSelectedRooms(all_rooms.current.filter(room => room.floor === floorName))
+  }
 
   if (error) {
     return <h1>There are are some errors, try reloading the page</h1>
@@ -80,9 +93,9 @@ function App() {
     <div style={{ display: "flex", height: "100vh"}}>
       <FloorContext.Provider value={floors}>
       <NavPanel onSelectionChange={handleNodeClick} ></NavPanel>
-      <RightPanel 
-        selectedRoom={selectedNode.type === NodeType.Room.toString() ? selectedNode.name : undefined}  
-        selectedFloor={selectedNode.type === NodeType.Floor.toString() ? selectedNode.name : undefined}>
+      <RightPanel
+        selectedRooms={selectedRooms} 
+        floorChangeHandle={floorChangeHandle}>
       </RightPanel> 
       </FloorContext.Provider>
     </div>

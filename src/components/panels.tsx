@@ -1,6 +1,6 @@
 import { FloorTreeNode} from "./treenodes"
 import { IFloor, Node, NodeType, IRoom, } from "./types"
-import { useContext, useState, useRef } from "react"
+import { useContext, useState, useRef, EventHandler, ChangeEventHandler } from "react"
 import { FloorContext } from "../data/contexts"
 import { ComboBox } from "./utils"
 import { GlobalDetail, FloorDetail, SingleRoomDetail, RoomList } from './details'
@@ -34,54 +34,25 @@ export const DetailPanel = ({children}) => {
 }
 
 interface RightPanelProps {
-    isAvailable?: boolean
-    minCapacity?: number
-    selectedFloor?: string
-    selectedRoom?: string
+    selectedRooms: IRoom[]
+    floorChangeHandle: (floorName: string) => void
 }
 
-export const RightPanel = (rooms: RightPanelProps) => {
-
-    const floors = useContext(FloorContext)
-    const [roomFilters, setRoomFilters] = useState(rooms)
-    const all_rooms = useRef<IRoom[]>(floors.flatMap(floor => floor.rooms))
-
-    let selectedRooms = all_rooms.current
-
-    console.log(roomFilters)
-    
-    if (roomFilters.selectedRoom !== undefined) {
-        selectedRooms = selectedRooms.filter(room => room.name === roomFilters.selectedRoom)
-    }
-    else {
-        if (roomFilters.selectedFloor !== undefined) {
-            selectedRooms = selectedRooms.filter(room => room.floor === roomFilters.selectedFloor)
-        }
-        if (roomFilters.minCapacity !== undefined) {
-            selectedRooms = selectedRooms.filter(room => room.capacity >= roomFilters.minCapacity)
-        }
-        if (roomFilters.isAvailable !== undefined) {
-            selectedRooms = selectedRooms.filter(room => room.isAvailable === roomFilters.isAvailable)
-        }
-    }
-
-    console.log(`Number of rooms ${selectedRooms.length}`)
+export const RightPanel = ({selectedRooms, floorChangeHandle}: RightPanelProps) => {
 
     return (
         <div style={{ flex: 8, padding: "1rem" }} className="pt-6">
-            <FilterPanle></FilterPanle>
+            <FilterPanle onFloorChange={floorChangeHandle}></FilterPanle>
             <RoomList rooms={selectedRooms}></RoomList>
         </div>
     )
 }
 
 interface FilterPanelProps {
-    floor?: string,
-    capacity?: number,
-    availability?: boolean
+    onFloorChange: (floorName: string) => void
 }
 
-export const FilterPanle = () => {
+export const FilterPanle = ({onFloorChange}: FilterPanelProps) => {
 
     const floors = useContext(FloorContext)
     const floorNames = floors.map(floor => floor.name)
@@ -89,6 +60,7 @@ export const FilterPanle = () => {
     const floorSelectionChange = (e: Event) => {
         const target = e.target as HTMLSelectElement;
         console.log(target.value)
+        onFloorChange(target.value)
     }
     return (
         <div>
