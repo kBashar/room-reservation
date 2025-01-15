@@ -14,6 +14,7 @@ function App() {
   const [error, setError] = useState<string|null>(null)
   const [floors, setFloors] = useState<IFloor[]>([])
   const [selectedRooms, setSelectedRooms] = useState<IRoom[]>([])
+  const [selectedFloor, setSelectedFloor] = useState("All")
   let all_rooms = useRef<IRoom[]>([])
 
 
@@ -74,11 +75,16 @@ function App() {
     }
     if (node.type === NodeType.Floor) {
       setSelectedRooms(all_rooms.current.filter(room => room.floor === node.name))
+      setSelectedFloor(node.name)
     }
   };
 
   const floorChangeHandle = (floorName: string) => {
-    setSelectedRooms(all_rooms.current.filter(room => room.floor === floorName))
+    if (floorName === "All") {
+      setSelectedRooms(all_rooms.current)
+    } else {
+      setSelectedRooms(all_rooms.current.filter(room => room.floor === floorName))
+    }
   }
 
   if (error) {
@@ -94,6 +100,7 @@ function App() {
       <FloorContext.Provider value={floors}>
       <NavPanel onSelectionChange={handleNodeClick} ></NavPanel>
       <RightPanel
+        selectedFloor = {selectedFloor}
         selectedRooms={selectedRooms} 
         floorChangeHandle={floorChangeHandle}>
       </RightPanel> 

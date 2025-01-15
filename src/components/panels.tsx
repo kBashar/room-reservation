@@ -34,28 +34,32 @@ export const DetailPanel = ({children}) => {
 }
 
 interface RightPanelProps {
+    selectedFloor: string
     selectedRooms: IRoom[]
     floorChangeHandle: (floorName: string) => void
 }
 
-export const RightPanel = ({selectedRooms, floorChangeHandle}: RightPanelProps) => {
+export const RightPanel = ({selectedFloor, selectedRooms, floorChangeHandle}: RightPanelProps) => {
 
     return (
         <div style={{ flex: 8, padding: "1rem" }} className="pt-6">
-            <FilterPanle onFloorChange={floorChangeHandle}></FilterPanle>
+            <FilterPanle selectedFloor={selectedFloor} onFloorChange={floorChangeHandle}></FilterPanle>
             <RoomList rooms={selectedRooms}></RoomList>
         </div>
     )
 }
 
 interface FilterPanelProps {
+    selectedFloor: string
     onFloorChange: (floorName: string) => void
+    availableFilterChange: (isAvailable: boolean) => void
 }
 
-export const FilterPanle = ({onFloorChange}: FilterPanelProps) => {
+export const FilterPanle = ({selectedFloor, onFloorChange}: FilterPanelProps) => {
 
     const floors = useContext(FloorContext)
-    const floorNames = floors.map(floor => floor.name)
+    let floorNames = floors.map(floor => floor.name)
+    floorNames.unshift("All")
 
     const floorSelectionChange = (e: Event) => {
         const target = e.target as HTMLSelectElement;
@@ -64,7 +68,7 @@ export const FilterPanle = ({onFloorChange}: FilterPanelProps) => {
     }
     return (
         <div>
-        <ComboBox name="floor_selection" label="Floor: " values={floorNames} valueChangeListener={floorSelectionChange}></ComboBox>
+        <ComboBox selected={selectedFloor} name="floor_selection" label="Floor: " values={floorNames} valueChangeListener={floorSelectionChange}></ComboBox>
         </div>
     )
 }
