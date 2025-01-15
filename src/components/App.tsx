@@ -85,6 +85,7 @@ function App() {
     } else {
       setSelectedRooms(all_rooms.current.filter(room => room.floor === floorName))
     }
+    setSelectedFloor(floorName)
   }
 
   if (error) {
